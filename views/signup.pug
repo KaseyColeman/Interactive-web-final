@@ -1,0 +1,31 @@
+extends layout
+block content
+
+    form(action="POST")
+        input(type='text' id='username' placeholder='Username')
+        input(type='text' id='password' placeholder='Password')
+        input(type='text' id='email' placeholder='Email')
+        input(type='text' id='age' placeholder='Age')
+        div(class='container')
+            label(for="q1") What is your favorite season?
+            select(id="q1" name="q1")
+                option(value="fall") Fall
+                option(value="winter") Winter
+                option(value="spring") Spring
+                option(value="summer") Summer
+        div(class='container')
+            label(for="q2") What is the best color?
+            select(id="q2" name="q2")
+                option(value="yellow") Yellow
+                option(value="red") Red
+                option(value="blue") Blue
+                option(value="maroon") Maroon
+        div(class='container')
+            label(for="q3") What is your favorite movie Genre?
+            select(id="q3" name="q3")
+                option(value="horror") Horror
+                option(value="romance") Romance
+                option(value="comedy") Comedy
+                option(value="thriller") Thriller
+
+        input(type='submit' value='Create Account')
