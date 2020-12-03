@@ -13,3 +13,17 @@ exports.signup = (req, res) => {
        "nav":nav
     });
   };
+
+  exports.chart = (req, res) => {
+    res.render('chart', {
+      "title": "Look at our cool chart",
+       "nav":nav
+    });
+  };
+  
+  exports.edit = (req, res) => {
+    res.render('edit', {
+      "title": "Edit Your Shit",
+       "nav":nav
+    });
+  };

@@ -1,12 +1,8 @@
 {
     "menu": [
-        [
-            "Home",
-            "/"
-        ],
-        [
-            "Sign Up",
-            "/signup"
-        ]
+        ["Home","/"],
+        ["Sign Up","/signup"],
+        ["Edit Profile","/edit"],
+        ["Data Chart", "/chart"]
     ]
 }
