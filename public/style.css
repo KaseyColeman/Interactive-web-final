@@ -79,3 +79,16 @@ body{
     margin-bottom: 30px;
     border-radius: 5px;
 }
+form{
+    padding-top: 40px;
+}
+
+
+.signbutton {
+    color: white !important;
+    font-size: large;
+  }
+
+.signbutton:hover{
+    background-color: #92817A !important;
+}
