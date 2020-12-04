@@ -1,5 +1,7 @@
 const nav = require('../nav');
 
+var connectionString = 'mongodb+srv://guest:Vault159@cluster0.2ximt.mongodb.net/test';
+
 exports.index = (req, res) => {
     res.render('index', {
       "title": "Login",
