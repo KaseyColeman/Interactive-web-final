@@ -1,6 +1,20 @@
 const nav = require('../nav');
+const mongoose = require.('mongoose');
+mongoose.Promise = global.Promise;
 
 var connectionString = 'mongodb+srv://guest:Vault159@cluster0.2ximt.mongodb.net/test';
+
+mongoose.connect(connectionString, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true
+});
+
+mongoose.set("useCreateIndex", true);
+mongoose.set("useFindAndModify", false);
+
+let mdb = mongoose.connection;
+mdb.on('error', console.error.bind(console, 'connection error'));
+mdb.once('open', callback => {});
 
 exports.index = (req, res) => {
     res.render('index', {
