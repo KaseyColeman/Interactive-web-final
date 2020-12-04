@@ -29,3 +29,24 @@ exports.signup = (req, res) => {
        "nav":nav
     });
   };
+let timesVisited = 0;
+
+exports.visited = (req, res) => {
+      timesVisited++;
+      res.cookie('times_visited', timesVisited, {maxAge: 111144446666});
+      if(req.cookies.beenToSiteBefore == 'yes') {
+          console.log(`page had been visited ${req.cookies.visited}`);
+      } else {
+          res.cookies('beenToSiteBefore', 'yes', {maxAge: 11114444666});
+          console.log('first timer, coo');
+      }
+}
+
+exports.getLastVisit = (req ,res, next) => {
+    if(req.session.visited) {
+        req.lastVisit = req.session.visited;
+    }
+    req.session.visited = Date.now();
+    res.send(`page last visited ${req.lastVisit}`);
+    next();
+}
