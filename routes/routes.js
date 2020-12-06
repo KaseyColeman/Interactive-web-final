@@ -1,6 +1,8 @@
 const nav = require('../nav');
-const mongoose = require.('mongoose');
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
+
+/*---------------------------------------------------------------Mongo Connection/Schema------------------------------------------------------------------------------*/ 
 
 var connectionString = 'mongodb+srv://guest:Vault159@cluster0.2ximt.mongodb.net/test';
 
@@ -16,6 +18,22 @@ let mdb = mongoose.connection;
 mdb.on('error', console.error.bind(console, 'connection error'));
 mdb.once('open', callback => {});
 
+let UserSchema = mongoose.Schema({
+   username: String,
+   password: String,
+   email: String,
+   age: String,
+   season: String,
+   color: String,
+   genre: String
+});
+
+let User = mongoose.model('User_Collection', UserSchema);
+
+
+
+/*---------------------------------------------------------------End Mongo Connection/Schema------------------------------------------------------------------------------*/ 
+/*------------------------------------------------------------------Routes and Defantition------------------------------------------------------------------------------*/ 
 exports.index = (req, res) => {
     res.render('index', {
       "title": "Login",
@@ -64,3 +82,6 @@ exports.getLastVisit = (req ,res, next) => {
     res.send(`page last visited ${req.lastVisit}`);
     next();
 }
+
+
+/*------------------------------------------------------------------End Routes and Defantition------------------------------------------------------------------------------*/ 
