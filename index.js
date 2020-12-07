@@ -14,14 +14,16 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser('secret'));
 
-app.all('*', routes.getLastVisit);
+// app.all('*', routes.getLastVisit);
 
-app.get('/', routes.visited);
+// app.get('/', routes.visited);
 
 app.get('/', routes.index);
 app.get('/signup', routes.signup);
 app.get('/edit',routes.edit);
 app.get('/chart', routes.chart);
+
+app.post('/signup', routes.add)
 
 
 
