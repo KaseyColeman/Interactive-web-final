@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.11.4"
+    "mongoose": "^5.11.4",
+    "session": "^0.1.0"
   },
   "devDependencies": {
     "cookie-parser": "^1.4.5",
