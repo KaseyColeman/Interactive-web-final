@@ -48,35 +48,42 @@ exports.signup = (req, res) => {
     });
   };
 
-  exports.chart = (req, res) => {
-    res.render('chart', {
-      "title": "Look at our cool chart",
-       "nav":nav
-    });
-  };
-  
-  exports.edit = (req, res) => {
-    res.render('edit', {
-      "title": "Edit Your Shit",
-       "nav":nav
-    });
-  };
+exports.chart = (req, res) => {
+  res.render('chart', {
+    "title": "Look at our cool chart",
+      "nav":nav
+  });
+};
 
-  exports.add = (req, res) => {
-    console.log(req.body)
-    let user = new User({
-      username:req.body.username,
-      password:req.body.password,
-      email:req.body.email,
-      age:req.body.age,
-      season:req.body.q1,
-      color:req.body.q2,
-      genre:req.body.q3
-    })
-    user.save();
-    res.redirect("/");
-    
-   }
+exports.profile = (req, res) => {
+  res.render('profile', {
+    "title": "Your Profile",
+    "nav": nav
+  });
+};
+  
+exports.edit = (req, res) => {
+  res.render('edit', {
+    "title": "Edit Your Shit",
+      "nav":nav
+  });
+};
+
+exports.add = (req, res) => {
+  console.log(req.body)
+  let user = new User({
+    username:req.body.username,
+    password:req.body.password,
+    email:req.body.email,
+    age:req.body.age,
+    season:req.body.q1,
+    color:req.body.q2,
+    genre:req.body.q3
+  })
+  user.save();
+  res.redirect("/");
+  
+  }
 
 
 
