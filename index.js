@@ -16,7 +16,9 @@ app.use(cookieParser('secret'));
 
 // app.all('*', routes.getLastVisit);
 
-// app.get('/', routes.visited);
+app.get('*', routes.visited);
+
+
 
 app.get('/', routes.index);
 app.get('/signup', routes.signup);
