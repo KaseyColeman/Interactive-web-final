@@ -90,15 +90,13 @@ exports.add = (req, res) => {
   exports.postlog = (req, res) => {
     console.log(req.body);
     User.findOne({ username: req.body.username }, (err, user) => {
-      if (bcrypt.compareSync(req.body.password, user.password)) {
-        res.redirect("/edit");
-        //This is where session stuff should be. Nicole. 
-      }
-      else {
-        res.redirect("/");
-      }
-
-    }) 
+        if (bcrypt.compareSync(req.body.password, user.password)) {
+            res.redirect("/edit");
+            //This is where session stuff should be. Nicole.
+        } else {
+            res.redirect("/");
+        }
+    });
   }
     
 
