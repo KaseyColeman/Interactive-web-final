@@ -2,14 +2,14 @@ extends layout
 
 block content
 
-    //- each item in profileDetails
-    //-     div(class="profile-items")
-    //-         //- I need a conditional here to check session stuff
-    //-         if(true)
-    //-             li=item.username
-    //-             li=item.email
-    //-             li=item.age
-    //-             li=item.season
-    //-             li=item.color
-    //-             li=item.genre
+    each item in profileDetails
+        div(class="profile-items")
+            //- I need a conditional here to check session stuff
+            if(true)
+                li=item.username
+                li=item.email
+                li=item.age
+                li=item.season
+                li=item.color
+                li=item.genre
     a(href="/edit" class="signbutton") Edit Profile
