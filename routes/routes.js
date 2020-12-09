@@ -36,79 +36,70 @@ let User = mongoose.model('User_Collection', UserSchema);
 /*---------------------------------------------------------------End Mongo Connection/Schema------------------------------------------------------------------------------*/
 /*------------------------------------------------------------------Routes and Defantition------------------------------------------------------------------------------*/
 exports.index = (req, res) => {
-  res.render('index', {
-    "title": "Login",
-    "nav": nav
-  });
-};
-
+    res.render('index', {
+      "title": "Login",
+      "nav":nav
+    });
+  };
+  
 exports.signup = (req, res) => {
-  res.render('signup', {
-    "title": "Create New Account",
-    "nav": nav
-  });
-};
+    res.render('signup', {
+      "title": "Create New Account",
+       "nav":nav
+    });
+  };
 
 exports.chart = (req, res) => {
   res.render('chart', {
     "title": "Look at our cool chart",
-    "nav": nav
+      "nav":nav
   });
 };
 
+exports.profile = (req, res) => {
+  res.render('profile', {
+    "title": "Your Profile",
+    "nav": nav
+  });
+};
+  
 exports.edit = (req, res) => {
   res.render('edit', {
     "title": "Edit Your Shit",
-    "nav": nav
+      "nav":nav
   });
 };
 
 exports.add = (req, res) => {
   console.log(req.body)
-  let hash = bcrypt.hashSync(req.body.password, 10)
   let user = new User({
-    username: req.body.username,
-    password: hash,
-    email: req.body.email,
-    age: req.body.age,
-    season: req.body.q1,
-    color: req.body.q2,
-    genre: req.body.q3
+    username:req.body.username,
+    password:req.body.password,
+    email:req.body.email,
+    age:req.body.age,
+    season:req.body.q1,
+    color:req.body.q2,
+    genre:req.body.q3
   })
   user.save();
   res.redirect("/");
+  
+  }
 
-}
 
-exports.postlog = (req, res) => {
-  console.log(req.body);
-  User.findOne({ username: req.body.username }, (err, user) => {
-    if (bcrypt.compareSync(req.body.password, user.password)) {
-      res.redirect("/edit");
-      //This is where session stuff should be. Nicole. 
+
+let visited = 0;
+
+exports.visited = (req, res, next) => {
+    visited++;
+    res.cookie('visited', visited, {maxAge: 99999999999999999});
+    if(req.cookies.beenToSiteBefore == 'yes') {
+       // res.send(`You have been here ${req.cookies.visited} times`);
+        next();
+    } else {
+        res.cookie('beenToSiteBefore', 'yes', {maxAge: 9999999999999});
     }
-    else {
-      res.redirect("/");
-    }
-
-
-  })
-
-}
-
-
-let timesVisited = 0;
-
-// exports.visited = (req, res) => {
-//       timesVisited++;
-//       res.cookie('times_visited', timesVisited, {maxAge: 111144446666});
-//       if(req.cookies.beenToSiteBefore == 'yes') {
-//           console.log(`page had been visited ${req.cookies.visited}`);
-//       } else {
-//           res.cookies('beenToSiteBefore', 'yes', {maxAge: 11114444666});
-//           console.log('first timer, coo');
-//       }
-// }
+};
 
 // exports.getLastVisit = (req ,res, next) => {
 //     if(req.session.visited) {
@@ -120,4 +111,4 @@ let timesVisited = 0;
 // }
 
 
-/*------------------------------------------------------------------End Routes and Defantition------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------End Routes and Definition------------------------------------------------------------------------------*/

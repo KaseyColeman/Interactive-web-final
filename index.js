@@ -18,10 +18,13 @@ let urlencoded = bodyparse.urlencoded({extended:true});
 
 // app.all('*', routes.getLastVisit);
 
-// app.get('/', routes.visited);
+app.get('*', routes.visited);
+
+
 
 app.get('/', routes.index);
 app.get('/signup', routes.signup);
+app.get('/profile', routes.profile);
 app.get('/edit',routes.edit);
 app.get('/chart', routes.chart);
 
