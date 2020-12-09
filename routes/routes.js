@@ -98,19 +98,23 @@ exports.add = (req, res) => {
         res.redirect("/");
       }
 
+    }) 
+  }
+    
 
-// let visited = 0;
 
-// exports.visited = (req, res, next) => {
-//     visited++;
-//     res.cookie('visited', visited, {maxAge: 99999999999999999});
-//     if(req.cookies.beenToSiteBefore == 'yes') {
-//        // res.send(`You have been here ${req.cookies.visited} times`);
-//         next();
-//     } else {
-//         res.cookie('beenToSiteBefore', 'yes', {maxAge: 9999999999999});
-//     }
-// };
+let visited = 0;
+
+exports.visited = (req, res, next) => {
+    visited++;
+    res.cookie('visited', visited, {maxAge: 99999999999999999});
+    if(req.cookies.beenToSiteBefore == 'yes') {
+       // res.send(`You have been here ${req.cookies.visited} times`);
+        next();
+    } else {
+        res.cookie('beenToSiteBefore', 'yes', {maxAge: 9999999999999});
+    }
+};
 
 // exports.getLastVisit = (req ,res, next) => {
 //     if(req.session.visited) {
