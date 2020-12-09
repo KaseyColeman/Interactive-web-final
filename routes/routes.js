@@ -36,42 +36,42 @@ let User = mongoose.model('User_Collection', UserSchema);
 /*---------------------------------------------------------------End Mongo Connection/Schema------------------------------------------------------------------------------*/
 /*------------------------------------------------------------------Routes and Defantition------------------------------------------------------------------------------*/
 exports.index = (req, res) => {
-    res.render('index', {
-      "title": "Login",
-      "nav":nav
-    });
-  };
-  
+  res.render('index', {
+    "title": "Login",
+    "nav": nav
+  });
+};
+
 exports.signup = (req, res) => {
-    res.render('signup', {
-      "title": "Create New Account",
-       "nav":nav
-    });
-  };
+  res.render('signup', {
+    "title": "Create New Account",
+    "nav": nav
+  });
+};
 
 exports.chart = (req, res) => {
   res.render('chart', {
     "title": "Look at our cool chart",
-      "nav":nav
+    "nav": nav
   });
 };
 
 exports.profile = (req, res) => {
-  User.find({username: req.session.username}, (err, user) => {
-    if(err) return console.error(err);
+  User.find({ username: req.session.username }, (err, user) => {
+    if (err) return console.error(err);
     res.render('profile', {
       "title": "Your Profile",
       "nav": nav,
       session: req.session,
       profileDetails: user
     });
-  });  
+  });
 };
-  
+
 exports.edit = (req, res) => {
   res.render('edit', {
     "title": "Edit Your Shit",
-      "nav":nav
+    "nav": nav
   });
 };
 
@@ -89,35 +89,36 @@ exports.add = (req, res) => {
   });
   user.save();
   res.redirect("/");
-  
+
 }
 
-  exports.postlog = (req, res) => {
-    console.log(req.body);
-    User.findOne({ username: req.body.username }, (err, user) => {
-        if (bcrypt.compareSync(req.body.password, user.password)) {
-            res.redirect("/profile");
-            //This is where session stuff should be. Nicole.
-        } else {
-            res.redirect("/");
-        }
-    });
-  }
-    
+exports.postlog = (req, res) => {
+  console.log(req.body);
+  User.findOne({ username: req.body.username }, (err, user) => {
+    console.log(user);
+    if (bcrypt.compareSync(req.body.password, user.password)) {
+      res.redirect("/profile");
+      //This is where session stuff should be. Nicole.
+    } else {
+      res.redirect("/");
+    }
+  });
+}
+
 
 // let visited = 0;
 
 let visited = 0;
 
 exports.visited = (req, res, next) => {
-    visited++;
-    res.cookie('visited', visited, {maxAge: 99999999999999999});
-    if(req.cookies.beenToSiteBefore == 'yes') {
-       // res.send(`You have been here ${req.cookies.visited} times`);
-        next();
-    } else {
-        res.cookie('beenToSiteBefore', 'yes', {maxAge: 9999999999999});
-    }
+  visited++;
+  res.cookie('visited', visited, { maxAge: 99999999999999999 });
+  if (req.cookies.beenToSiteBefore == 'yes') {
+    // res.send(`You have been here ${req.cookies.visited} times`);
+    next();
+  } else {
+    res.cookie('beenToSiteBefore', 'yes', { maxAge: 9999999999999 });
+  }
 };
 
 // exports.getLastVisit = (req ,res, next) => {
