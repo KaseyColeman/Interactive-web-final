@@ -57,10 +57,15 @@ exports.chart = (req, res) => {
 };
 
 exports.profile = (req, res) => {
-  res.render('profile', {
-    "title": "Your Profile",
-    "nav": nav
-  });
+  User.find({username: req.session.username}, (err, user) => {
+    if(err) return console.error(err);
+    res.render('profile', {
+      "title": "Your Profile",
+      "nav": nav,
+      session: req.session,
+      profileDetails: user
+    });
+  });  
 };
   
 exports.edit = (req, res) => {
@@ -81,27 +86,26 @@ exports.add = (req, res) => {
     season: req.body.q1,
     color: req.body.q2,
     genre: req.body.q3
-  })
+  });
   user.save();
   res.redirect("/");
   
-  }
+};
 
-  exports.postlog = (req, res) => {
-    console.log(req.body);
-    User.findOne({ username: req.body.username }, (err, user) => {
-      if (bcrypt.compareSync(req.body.password, user.password)) {
-        res.redirect("/edit");
-        //This is where session stuff should be. Nicole. 
-      }
-      else {
-        res.redirect("/");
-      }
+exports.postlog = (req, res) => {
+  console.log(req.body);
+  User.findOne({ username: req.body.username }, (err, user) => {
+    if (bcrypt.compareSync(req.body.password, user.password)) {
+      res.redirect("/edit");
+      //This is where session stuff should be. Nicole. 
+    }
+    else {
+      res.redirect("/");
+    };
 
-    }) 
-  }
-    
-
+  });
+};
+// let visited = 0;
 
 let visited = 0;
 
