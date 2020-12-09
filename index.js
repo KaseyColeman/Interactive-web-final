@@ -18,7 +18,7 @@ let urlencoded = bodyparse.urlencoded({extended:true});
 
 // app.all('*', routes.getLastVisit);
 
-app.get('*', routes.visited);
+// app.get('*', routes.visited);
 
 
 
