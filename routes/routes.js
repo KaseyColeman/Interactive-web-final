@@ -1,8 +1,9 @@
 const nav = require('../nav');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt')
 mongoose.Promise = global.Promise;
 
-/*---------------------------------------------------------------Mongo Connection/Schema------------------------------------------------------------------------------*/ 
+/*---------------------------------------------------------------Mongo Connection/Schema------------------------------------------------------------------------------*/
 
 var connectionString = 'mongodb+srv://guest:Vault159@cluster0.2ximt.mongodb.net/test';
 
@@ -16,68 +17,84 @@ mongoose.set("useFindAndModify", false);
 
 let mdb = mongoose.connection;
 mdb.on('error', console.error.bind(console, 'connection error'));
-mdb.once('open', callback => {});
+mdb.once('open', callback => { });
 
 let UserSchema = mongoose.Schema({
-   username: String,
-   password: String,
-   email: String,
-   age: String,
-   season: String,
-   color: String,
-   genre: String
+  username: String,
+  password: String,
+  email: String,
+  age: String,
+  season: String,
+  color: String,
+  genre: String
 });
 
 let User = mongoose.model('User_Collection', UserSchema);
 
 
 
-/*---------------------------------------------------------------End Mongo Connection/Schema------------------------------------------------------------------------------*/ 
-/*------------------------------------------------------------------Routes and Defantition------------------------------------------------------------------------------*/ 
+/*---------------------------------------------------------------End Mongo Connection/Schema------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------Routes and Defantition------------------------------------------------------------------------------*/
 exports.index = (req, res) => {
-    res.render('index', {
-      "title": "Login",
-      "nav":nav
-    });
-  };
-  
+  res.render('index', {
+    "title": "Login",
+    "nav": nav
+  });
+};
+
 exports.signup = (req, res) => {
-    res.render('signup', {
-      "title": "Create New Account",
-       "nav":nav
-    });
-  };
+  res.render('signup', {
+    "title": "Create New Account",
+    "nav": nav
+  });
+};
 
-  exports.chart = (req, res) => {
-    res.render('chart', {
-      "title": "Look at our cool chart",
-       "nav":nav
-    });
-  };
-  
-  exports.edit = (req, res) => {
-    res.render('edit', {
-      "title": "Edit Your Shit",
-       "nav":nav
-    });
-  };
+exports.chart = (req, res) => {
+  res.render('chart', {
+    "title": "Look at our cool chart",
+    "nav": nav
+  });
+};
 
-  exports.add = (req, res) => {
-    console.log(req.body)
-    let user = new User({
-      username:req.body.username,
-      password:req.body.password,
-      email:req.body.email,
-      age:req.body.age,
-      season:req.body.q1,
-      color:req.body.q2,
-      genre:req.body.q3
-    })
-    user.save();
-    res.redirect("/");
-    
-   }
+exports.edit = (req, res) => {
+  res.render('edit', {
+    "title": "Edit Your Shit",
+    "nav": nav
+  });
+};
 
+exports.add = (req, res) => {
+  console.log(req.body)
+  let hash = bcrypt.hashSync(req.body.password, 10)
+  let user = new User({
+    username: req.body.username,
+    password: hash,
+    email: req.body.email,
+    age: req.body.age,
+    season: req.body.q1,
+    color: req.body.q2,
+    genre: req.body.q3
+  })
+  user.save();
+  res.redirect("/");
+
+}
+
+exports.postlog = (req, res) => {
+  console.log(req.body);
+  User.findOne({ username: req.body.username }, (err, user) => {
+    if (bcrypt.compareSync(req.body.password, user.password)) {
+      res.redirect("/edit");
+      //This is where session stuff should be. Nicole. 
+    }
+    else {
+      res.redirect("/");
+    }
+
+
+  })
+
+}
 
 
 let timesVisited = 0;
@@ -103,4 +120,4 @@ let timesVisited = 0;
 // }
 
 
-/*------------------------------------------------------------------End Routes and Defantition------------------------------------------------------------------------------*/ 
+/*------------------------------------------------------------------End Routes and Defantition------------------------------------------------------------------------------*/

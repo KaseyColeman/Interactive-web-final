@@ -4,6 +4,7 @@ const path = require('path');
 const routes = require('./routes/routes');
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
+const bodyparse = require('body-parser');
 const app = express();
 
 app.set('view engine', 'pug');
@@ -13,6 +14,7 @@ app.use(express.urlencoded({
     extended: true
 }));
 app.use(cookieParser('secret'));
+let urlencoded = bodyparse.urlencoded({extended:true});
 
 // app.all('*', routes.getLastVisit);
 
@@ -23,7 +25,8 @@ app.get('/signup', routes.signup);
 app.get('/edit',routes.edit);
 app.get('/chart', routes.chart);
 
-app.post('/signup', routes.add)
+app.post('/signup', routes.add);
+app.post('/postlog', routes.postlog);
 
 
 
