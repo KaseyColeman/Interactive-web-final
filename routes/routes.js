@@ -70,7 +70,7 @@ exports.profile = (req, res) => {
 
 exports.edit = (req, res) => {
   res.render('edit', {
-    "title": "Edit Your Shit",
+    "title": "Edit Your S###",
     "nav": nav
   });
 };
@@ -103,6 +103,23 @@ exports.postlog = (req, res) => {
       res.redirect("/");
     }
   });
+}
+
+exports.api=(req,res)=>{
+  let WHY={
+    "What is your favorite seaseon?":{"fall":0, "winter":0, "spring":0, "summer":0 }, 
+    "What is the best color?":{"yellow":0, "red":0, "blue":0, "maroon":0},
+    "What is your favorite genre?":{"horror":0, "romance":0, "comedy":0, "thriller":0 }
+  }
+  User.find((err, users)=>{
+    users.forEach(user=>{
+      WHY["What is your favorite seaseon?"][user.season]++
+      WHY["What is the best color?"][user.color]++
+      WHY["What is your favorite genre?"][user.genre]++
+    })
+    res.json(WHY);
+  })
+
 }
 
 

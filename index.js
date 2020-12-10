@@ -27,6 +27,7 @@ app.get('/signup', routes.signup);
 app.get('/profile', routes.profile);
 app.get('/edit',routes.edit);
 app.get('/chart', routes.chart);
+app.get('/api', routes.api);
 
 app.post('/signup', routes.add);
 app.post('/postlog', routes.postlog);
