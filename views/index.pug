@@ -1,9 +1,0 @@
-extends layout
-block content
-
-    form(action="/postlog" method="POST")
-        input(type='text' id='username' name="username" placeholder='Username')
-        input(type='text' id='password' name="password" placeholder='Password')
-        input(type='submit' value='Login')
-
-    a(href="/signup" class="signbutton") Or Sign Up Here

@@ -1,6 +1,7 @@
 {
     "menu": [
-        ["Login","/"],
-        ["Data Chart", "/chart"]
+        ["Home", "/"],
+        ["Profile", "/profile"],
+        ["Login", "/login"]
     ]
 }

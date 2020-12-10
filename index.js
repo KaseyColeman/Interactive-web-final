@@ -4,7 +4,7 @@ const path = require('path');
 const routes = require('./routes/routes');
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
-const bodyparse = require('body-parser');
+const bodyParser = require('body-parser');
 const app = express();
 
 app.set('view engine', 'pug');
@@ -14,7 +14,13 @@ app.use(express.urlencoded({
     extended: true
 }));
 app.use(cookieParser('secret'));
-let urlencoded = bodyparse.urlencoded({extended:true});
+app.use(expressSession({
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+}));
+
+let urlencoded = bodyParser.urlencoded({extended:true});
 
 // app.all('*', routes.getLastVisit);
 
@@ -22,15 +28,16 @@ let urlencoded = bodyparse.urlencoded({extended:true});
 
 
 
-app.get('/', routes.index);
+app.get('/login', routes.login);
 app.get('/signup', routes.signup);
-app.get('/profile', routes.profile);
-app.get('/edit',routes.edit);
-app.get('/chart', routes.chart);
+app.get('/profile', routes.checkAuth, routes.profile);
+app.get('/edit', routes.edit);
+app.get('/logout', routes.logout);
+app.get('/', routes.chart);
 app.get('/api', routes.api);
 
-app.post('/signup', routes.add);
-app.post('/postlog', routes.postlog);
+app.post('/login', urlencoded, routes.postLog);
+app.post('/signup', routes.postSign);
 
 
 

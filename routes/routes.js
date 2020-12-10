@@ -35,47 +35,64 @@ let User = mongoose.model('User_Collection', UserSchema);
 
 /*---------------------------------------------------------------End Mongo Connection/Schema------------------------------------------------------------------------------*/
 /*------------------------------------------------------------------Routes and Defantition------------------------------------------------------------------------------*/
-exports.index = (req, res) => {
-  res.render('index', {
-    "title": "Login",
-    "nav": nav
-  });
-};
+exports.checkAuth = (req, res, next) => {
+    User.find({username: req.session.username}, (err, user) => {
+        if (!(req.session.user && req.session.user.authenticated) || err) {
+            res.redirect("/login");
+            return console.error(err);
+        }
+           next();
+    });
+}
 
+exports.login = (req, res) => {
+    res.render('login', {
+      "title": "Login",
+      "nav":nav
+    });
+  };
+
+exports.logout = (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.log(err);
+        } else {res.redirect('/login');}
+    });
+}
+  
 exports.signup = (req, res) => {
-  res.render('signup', {
-    "title": "Create New Account",
-    "nav": nav
-  });
-};
+    res.render('signup', {
+      "title": "Create New Account",
+       "nav":nav
+    });
+  };
 
 exports.chart = (req, res) => {
   res.render('chart', {
-    "title": "Look at our cool chart",
-    "nav": nav
+      "nav":nav,
+      "title": "Look at our cool chart"
+
   });
 };
 
+
 exports.profile = (req, res) => {
-  User.find({ username: req.session.username }, (err, user) => {
-    if (err) return console.error(err);
     res.render('profile', {
       "title": "Your Profile",
       "nav": nav,
-      session: req.session,
-      profileDetails: user
+      session: req.session
+      //profileDetails: username
     });
-  });
 };
-
+  
 exports.edit = (req, res) => {
   res.render('edit', {
-    "title": "Edit Your S###",
-    "nav": nav
+    "title": "Edit Your Shit",
+      "nav":nav
   });
 };
 
-exports.add = (req, res) => {
+exports.postSign = (req, res) => {
   console.log(req.body)
   let hash = bcrypt.hashSync(req.body.password, 10)
   let user = new User({
@@ -88,54 +105,53 @@ exports.add = (req, res) => {
     genre: req.body.q3
   });
   user.save();
-  res.redirect("/");
-
+  res.redirect("/login");
 }
 
-exports.postlog = (req, res) => {
-  console.log(req.body);
-  User.findOne({ username: req.body.username }, (err, user) => {
-    console.log(user);
-    if (bcrypt.compareSync(req.body.password, user.password)) {
-      res.redirect("/profile");
-      //This is where session stuff should be. Nicole.
-    } else {
-      res.redirect("/");
-    }
-  });
-}
+  exports.postLog = (req, res) => {
+    console.log(req.body);
+    User.findOne({ username: req.body.username }, (err, user) => {
+        if (bcrypt.compareSync(req.body.password, user.password)) {
+            req.session.user = {
+                authenticated: true,
+                username: req.body.username
+            }
+            res.redirect("/profile");
+        } else { res.redirect("/login"); }
+    });
+  }
+  /*--------------- api start -----------   */
 
 exports.api=(req,res)=>{
-  let WHY={
-    "What is your favorite seaseon?":{"fall":0, "winter":0, "spring":0, "summer":0 }, 
-    "What is the best color?":{"yellow":0, "red":0, "blue":0, "maroon":0},
-    "What is your favorite genre?":{"horror":0, "romance":0, "comedy":0, "thriller":0 }
-  }
-  User.find((err, users)=>{
-    users.forEach(user=>{
-      WHY["What is your favorite seaseon?"][user.season]++
-      WHY["What is the best color?"][user.color]++
-      WHY["What is your favorite genre?"][user.genre]++
+    let WHY={
+        "What is your favorite season?":{"fall":0, "winter":0, "spring":0, "summer":0 },
+        "What is the best color?":{"yellow":0, "red":0, "blue":0, "maroon":0},
+        "What is your favorite genre?":{"horror":0, "romance":0, "comedy":0, "thriller":0 }
+    }
+    User.find((err, users)=>{
+        users.forEach(user=>{
+            WHY["What is your favorite season?"][user.season]++
+            WHY["What is the best color?"][user.color]++
+            WHY["What is your favorite genre?"][user.genre]++
+        })
+        res.json(WHY);
     })
-    res.json(WHY);
-  })
 
 }
 
-
-// let visited = 0;
-
+/*--------------- api end -----------   */
+/*--------------- cookies start -----------   */
 let visited = 0;
 
 exports.visited = (req, res, next) => {
-  visited++;
-  res.cookie('visited', visited, { maxAge: 99999999999999999 });
-  if (req.cookies.beenToSiteBefore == 'yes') {
-    // res.send(`You have been here ${req.cookies.visited} times`);
-    next();
-  } else {
-    res.cookie('beenToSiteBefore', 'yes', { maxAge: 9999999999999 });
-  }
+    visited++;
+    res.cookie('visited', visited, {maxAge: 99999999999999999});
+    if(req.cookies.beenToSiteBefore == 'yes') {
+       // res.send(`You have been here ${req.cookies.visited} times`);
+        next();
+    } else {
+        res.cookie('beenToSiteBefore', 'yes', {maxAge: 9999999999999});
+    }
 };
 
 // exports.getLastVisit = (req ,res, next) => {
@@ -147,5 +163,6 @@ exports.visited = (req, res, next) => {
 //     next();
 // }
 
+/*--------------- cookies end -----------   */
 
 /*------------------------------------------------------------------End Routes and Definition------------------------------------------------------------------------------*/

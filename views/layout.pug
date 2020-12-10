@@ -4,13 +4,12 @@ html
         link(href='style.css' rel='stylesheet')
         title=title
     body
-        header      
-            h1 #{title}
         nav
             each item in nav.menu
                 a( href=item[1] target=item[2])
                     li(id=item[0] class="flex-item") #{item[0]}
-
+        header
+            h1 #{title}
         section
             block content
 
