@@ -2,16 +2,19 @@ extends layout
 
 block content
 
-    //- each item in profileDetails
-    //-     div(class="profile-items")
-    //-         //- I need a conditional here to check session stuff
-    //-         if(true)
-    //-             li=item.username
-    //-             li=item.email
-    //-             li=item.age
-    //-             li=item.season
-    //-             li=item.color
-    //-             li=item.genre
+    console.log("thisis working")
+    console.log(profileDetails)
+    each item in profileDetails
+        div(class="profile-items")
+            //- I need a conditional here to check session stuff
+            if(true)
+                ul
+                    li Username: #{item.username} 
+                    li Email: #{item.email}
+                    li Age: #{item.age}
+                    li Favorite Season: #{item.season}
+                    li Fovorite Color: #{item.color}
+                    li Favorite Genre: #{item.genre}
     a(href="/edit" class="button" id="editProfile") Edit Profile
 
     a(href="/logout" class="button" id="logOut") Log Out

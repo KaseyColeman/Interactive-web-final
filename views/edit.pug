@@ -3,3 +3,46 @@ block content
 
     h1 This is where more shit will be
     p more about the profile i am guessing
+
+     form(action='/edit'  method='POST' class='update-profile-form')
+            div(class="user-details , profile")
+                div
+                    label="Username: "
+                    span=session.username
+                    input(type='text' name="updatedUsername" placeholder='Update username' class='user change-box')
+                div
+                    label="Password: "
+                    span=session.password
+                    input(type='text' name='updatedPassword' placeholder='Update password' class='user change-box')
+                div
+                    label="Email: "
+                    span=session.email
+                    input(type='text' name='updatedEmail' placeholder='Update email' class='user change-box')
+                div
+                    label="Age: "
+                    span=session.age
+                    input(type='text' name='updatedAge' placeholder='Updated user' class='user change-box')
+                div(class='container')
+                    label(for="q1") What is your favorite season?
+                    select(id="q1" name="q1")
+                        option(value="fall") Fall
+                        option(value="winter") Winter
+                        option(value="spring") Spring
+                        option(value="summer") Summer
+                div(class='container')
+                    label(for="q2") What is the best color?
+                    select(id="q2" name="q2")
+                        option(value="yellow") Yellow
+                        option(value="red") Red
+                        option(value="blue") Blue
+                        option(value="maroon") Maroon
+                div(class='container')
+                    label(for="q3") What is your favorite movie Genre?
+                    select(id="q3" name="q3")
+                        option(value="horror") Horror
+                        option(value="romance") Romance
+                        option(value="comedy") Comedy
+                        option(value="thriller") Thriller
+
+
+                button(type='submit') Update profile

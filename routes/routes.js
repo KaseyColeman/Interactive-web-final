@@ -1,6 +1,7 @@
 const nav = require('../nav');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { json } = require('body-parser');
 let cookie;
 mongoose.Promise = global.Promise;
 
@@ -78,21 +79,66 @@ exports.chart = (req, res) => {
 };
 
 
-exports.profile = (req, res) => {
-    res.render('profile', {
-      "title": "Your Profile",
-      "nav": nav,
-      session: req.session
-      //profileDetails: username
+exports.profile =(req, res) => {
+
+    // console.log(req.session);
+    // // var user = await User.findById("req.session.username")
+    // var user = User.findOne({"username" : req.session.user.username});
+    // console.log(user)
+    // console.log("THIS RIGHT HERE");
+    // console.log(req.session.user.username);
+
+    User.find({username: req.session.user.username},(err, user) => {
+      if (err) return console.error(err);
+      res.render('profile', {
+        "title": "Your Profile",
+        "nav": nav,
+        session: req.session,
+        profileDetails: user
+      })
     });
+    
+    // console.log(req.body.session);
 };
   
 exports.edit = (req, res) => {
-  res.render('edit', {
-    "title": "Edit Your Shit",
-      "nav":nav
+
+
+  User.find({username: req.session.user.username},(err, user) => {
+    if (err) return console.error(err);
+    console.log(user);
+    res.render('edit', {
+      "title": "Your Profile",
+      "nav": nav,
+      "session": user
+    })
   });
+
 };
+
+exports.updateProfile = async (req, res) => {
+
+  var body = req.body;
+  let hash = bcrypt.hashSync(req.body.updatedPassword, 10)
+  var updatedData = {
+    username: req.body.updatedUsername,
+    password: hash,
+    email: req.body.updatedEmail,
+    age: req.body.updatedAge,
+    season: req.body.q1,
+    color: req.body.q2,
+    genre: req.body.q3
+  }
+
+  await User.findOneAndUpdate({"username": req.session.user.username}, updatedData);
+  
+  req.session.destroy(err => {
+    if (err) {
+        console.log(err);
+    } else {res.redirect('/login');}
+});
+
+}
 
 exports.postSign = (req, res) => {
   console.log(req.body)

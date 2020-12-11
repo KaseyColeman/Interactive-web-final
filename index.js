@@ -36,6 +36,7 @@ app.get('/api', routes.api);
 
 app.post('/login', urlencoded, routes.postLog);
 app.post('/signup', routes.postSign);
+app.post('/edit', routes.updateProfile)
 
 
 
