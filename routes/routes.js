@@ -1,6 +1,7 @@
 const nav = require('../nav');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+let cookie;
 mongoose.Promise = global.Promise;
 
 /*---------------------------------------------------------------Mongo Connection/Schema------------------------------------------------------------------------------*/
@@ -48,7 +49,8 @@ exports.checkAuth = (req, res, next) => {
 exports.login = (req, res) => {
     res.render('login', {
       "title": "Login",
-      "nav":nav
+      "nav":nav,
+      "cookie":cookie
     });
   };
 
@@ -145,23 +147,22 @@ let visited = 0;
 
 exports.visited = (req, res, next) => {
     visited++;
-    res.cookie('visited', visited, {maxAge: 99999999999999999});
-    if(req.cookies.beenToSiteBefore == 'yes') {
-       // res.send(`You have been here ${req.cookies.visited} times`);
-        next();
-    } else {
-        res.cookie('beenToSiteBefore', 'yes', {maxAge: 9999999999999});
-    }
+    let date = new Date();
+    date.toLocaleString("en-US");
+    cookie = "PAGE LAST VISITED ON " + req.cookies['visited'];
+    res.cookie('visited', date.toLocaleString("en-US"), {maxAge: 99999999999999999});
+    next();
 };
 
-// exports.getLastVisit = (req ,res, next) => {
-//     if(req.session.visited) {
-//         req.lastVisit = req.session.visited;
-//     }
-//     req.session.visited = Date.now();
-//     res.send(`page last visited ${req.lastVisit}`);
-//     next();
-// }
+exports.checkLog = (req, res, next) => {
+    if(req.session.user) {
+        res.redirect("/profile");
+        return;
+    }
+    next();
+}
+
+
 
 /*--------------- cookies end -----------   */
 

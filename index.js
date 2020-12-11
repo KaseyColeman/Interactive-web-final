@@ -19,16 +19,14 @@ app.use(expressSession({
     saveUninitialized: true,
     resave: true
 }));
+app.use(routes.visited);
 
 let urlencoded = bodyParser.urlencoded({extended:true});
 
 // app.all('*', routes.getLastVisit);
 
-// app.get('*', routes.visited);
 
-
-
-app.get('/login', routes.login);
+app.get('/login', routes.checkLog, routes.login);
 app.get('/signup', routes.signup);
 app.get('/profile', routes.checkAuth, routes.profile);
 app.get('/edit', routes.edit);
