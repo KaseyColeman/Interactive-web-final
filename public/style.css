@@ -36,9 +36,13 @@ input[type=text]:focus {
     outline: none;
 }
 input[type=text]::placeholder {
-    color: var(--coffee);
+    color: #7C8691;
 }
 
+/* vv select categories vv */
+.container {
+    margin: 10px 20%;
+}
 select {
     width: 60%;
     padding: 16px 20px;
@@ -46,15 +50,22 @@ select {
     border-radius: 4px;
     background-color: #E39695;
     margin-left: 20%;
+    color: white;
+    font-size: 16px;
 }
+
+.user-details {
+    color: white;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
 
 label {
     margin-left: 20%;
 }
 
-.container {
-    margin: 10px 20%;
-}
+
 
 input[type=submit] {
     width: 60%;
@@ -62,9 +73,11 @@ input[type=submit] {
     margin: 8px 20%;
     box-sizing: border-box;
     text-align: center;
-    background-color: #E4B1AB;
+    background-color: #E39695;
     border-radius: 5px;
     border: none;
+    color: white;
+    font-size: 18px;
 }
 input[type=submit]:hover {
     cursor: pointer;
@@ -88,6 +101,7 @@ li {
     width: 60%;
     color: var(--coffee);
     font-size: large;
+    user-select: none;
 }
 li:hover {
     background-color: var(--opal);
@@ -96,16 +110,31 @@ li:hover {
 .button {
     background-color: var(--opal);
     color: white;
+    font-size: 18px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     width: auto;
     padding: 5px;
     margin: 20px;
+    border: none;
+    cursor: pointer;
 }
 .button:hover {
     background-color: #6E7881;
 }
+
+#update-profile {
+    width: 50%;
+    margin: 4px 25%;
+    padding: 5px 20px;
+    border-radius: 3px;
+    background-color: #E39695;
+}
+#update-profile:hover {
+    background-color: var(--red);
+}
+
 .signup {
     align-content: center;
     margin-left: auto;
@@ -125,6 +154,11 @@ form{
 
 .signbutton:hover{
     background-color: #DF7373 !important;
+}
+
+footer {
+    margin-left: 3px;
+    color: var(--coffee);
 }
 /*---------------------------------------------------------------Graph-------------------------------------------------------------------------*/
 

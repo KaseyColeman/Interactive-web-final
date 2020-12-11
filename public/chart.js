@@ -7,11 +7,11 @@ fetch('http://localhost:3001/api').then(res =>
     var chart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ["Yellow", "Red", "Blue", "Maroon"],
+            labels: ["YELLOW", "RED", "BLUE", "MAROON"],
             datasets: [{
-                label: "Favorite Color",
-                backgroundColor: ['rgb(238, 250, 0)', 'rgb(255, 0, 55)', 'rgb(41, 49, 206)', 'rgb(220, 20, 60)'],
-                borderColor: ['rgb(238, 243, 0)', 'rgb(255, 0, 6)', 'rgb(6, 0, 140)', 'rgb(178, 20, 60)'],
+                label: "Favorite color",
+                backgroundColor: ['rgb(255, 230, 87)', 'rgb(251,100,100)', 'rgb(100, 145, 251)', 'rgb(143, 60, 60)'],
+                // borderColor: ['rgb(238, 243, 0)', 'rgb(0, 0, 6)', 'rgb(6, 0, 140)', 'rgb(178, 20, 60)'],
                 data: [data["What is the best color?"]["yellow"], data["What is the best color?"]["red"], data["What is the best color?"]["blue"], data["What is the best color?"]["maroon"]]
             }]
         },
@@ -20,11 +20,11 @@ fetch('http://localhost:3001/api').then(res =>
     var chart = new Chart(boxy, {
         type: 'bar',
         data: {
-            labels: ["Fall", "Winter", "Spring", "Summer"],
+            labels: ["FALL", "WINTER", "SPRING", "SUMMER"],
             datasets: [{
                 label: "Favorite Season",
-                backgroundColor: ['rgb(255, 158, 75)', 'rgb(0, 244, 255)', 'rgb(255, 208, 255)', 'rgb(255, 88, 141)'],
-                borderColor: ['rgb(255, 133, 53)', 'rgb(0, 191, 255)', 'rgb(255, 20, 60)', 'rgb(255, 43, 141)'],
+                backgroundColor: ['rgb(255, 178, 100)', 'rgb(141, 243, 255)', 'rgb(178, 255, 100)', 'rgb(255, 230, 87)'],
+                // borderColor: ['rgb(255, 133, 53)', 'rgb(0, 191, 255)', 'rgb(255, 20, 60)', 'rgb(255, 43, 141)'],
                 data: [data["What is your favorite season?"]["fall"], data["What is your favorite season?"]["winter"], data["What is your favorite season?"]["spring"], data["What is your favorite season?"]["summer"]]
             }]
         },
@@ -33,10 +33,10 @@ fetch('http://localhost:3001/api').then(res =>
     var chart = new Chart(quadrilateral, {
         type: 'bar',
         data: {
-            labels: ["Horror", "Romance", "Comedy", "Thriller"],
+            labels: ["HORROR", "ROMANCE", "COMEDY", "THRILLER"],
             datasets: [{
                 label: "Favorite Movie Genres",
-                backgroundColor: ['rgb(0, 0, 0)', 'rgb(255, 255, 69)', 'rgb(41, 49, 206)', 'rgb(255, 0, 0)'],
+                backgroundColor: ['rgb(88, 88, 88)', 'rgb(255, 152, 249)', 'rgb(255, 230, 87)', 'rgb(109, 157, 106)'],
                 borderColor: ['rgb(0, 0, 49)', 'rgb(255, 255, 150)', 'rgb(6, 0, 140)', 'rgb(255, 59, 0)'],
                 data: [data["What is your favorite genre?"]["horror"], data["What is your favorite genre?"]["romance"], data["What is your favorite genre?"]["comedy"], data["What is your favorite genre?"]["thriller"]]
             }]

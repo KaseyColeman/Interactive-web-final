@@ -1,9 +1,5 @@
 extends layout
 block content
-
-    h1 This is where more shit will be
-    p more about the profile i am guessing
-
      form(action='/edit'  method='POST' class='update-profile-form')
             div(class="user-details , profile")
                 div
@@ -21,7 +17,7 @@ block content
                 div
                     label="Age: "
                     span=session.age
-                    input(type='text' name='updatedAge' placeholder='Updated user' class='user change-box')
+                    input(type='text' name='updatedAge' placeholder='Update age' class='user change-box')
                 div(class='container')
                     label(for="q1") What is your favorite season?
                     select(id="q1" name="q1")
@@ -45,4 +41,4 @@ block content
                         option(value="thriller") Thriller
 
 
-                button(type='submit') Update profile
+                button(class='button' id='update-profile' type='submit') Update profile

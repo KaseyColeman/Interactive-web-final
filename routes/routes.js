@@ -73,21 +73,13 @@ exports.signup = (req, res) => {
 exports.chart = (req, res) => {
   res.render('chart', {
       "nav":nav,
-      "title": "Look at our cool chart"
+      "title": "Daang look at these charts!"
 
   });
 };
 
 
 exports.profile =(req, res) => {
-
-    // console.log(req.session);
-    // // var user = await User.findById("req.session.username")
-    // var user = User.findOne({"username" : req.session.user.username});
-    // console.log(user)
-    // console.log("THIS RIGHT HERE");
-    // console.log(req.session.user.username);
-
     User.find({username: req.session.user.username},(err, user) => {
       if (err) return console.error(err);
       res.render('profile', {
@@ -102,8 +94,6 @@ exports.profile =(req, res) => {
 };
   
 exports.edit = (req, res) => {
-
-
   User.find({username: req.session.user.username},(err, user) => {
     if (err) return console.error(err);
     console.log(user);
